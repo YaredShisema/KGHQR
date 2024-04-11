@@ -45,18 +45,6 @@ app.post('/submit-feedback', (req, res) => {
   });
 });
 
-app.get('/generate-qr', (req, res) => {
-  const data = 'http://127.0.0.1:3000/index';
-  qr.toFile('./public/qr_code.png', data, (err) => {
-    if (err) {
-      console.error(err);
-      res.send('Error generating QR code');
-    } else {
-      console.log('QR code generated successfully');
-      res.send('QR code generated successfully');
-    }
-  });
-});
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
