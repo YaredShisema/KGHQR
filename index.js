@@ -2,15 +2,16 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const qr = require('qrcode');
+const path = require('path');
 
 const app = express();
-
+const port = process.env.PORT || 3000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
-const SMTP_USERNAME = 'yaredshi3@gmail.com';
-const SMTP_PASSWORD = 'yusp nbxq hsbv rnjk'; // Use the app-specific password here
+const SMTP_USERNAME = process.env.SMTP_USERNAME || 'yaredshi3@gmail.com';
+const SMTP_PASSWORD = process.env.SMTP_PASSWORD || 'yusp nbxq hsbv rnjk'; // Use the app-specific password here
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -21,7 +22,7 @@ const transporter = nodemailer.createTransport({
 });
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.post('/submit-feedback', (req, res) => {
@@ -45,7 +46,6 @@ app.post('/submit-feedback', (req, res) => {
   });
 });
 
-
 app.listen(port, () => {
-  console.log(`Server running at https://kghqr.netlify.app/`);
+  console.log(`Server running on port ${port}`);
 });
